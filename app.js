@@ -121,3 +121,22 @@ function updateTotals() {
     console.log(error);
   }
 }
+
+// EVENTO QUE CAPTURA CLICK NOS ITENS DA LISTA
+
+expenseList.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  //verificar se o elemento clicado é o icone de remover
+
+  if(e.target.classList.contains("remove-icon")){
+    // obter li pai do elemento
+    const item = e.target.closest(".expense")
+    
+    //remove item
+    item.remove()
+  }
+
+  updateTotals()
+
+})
