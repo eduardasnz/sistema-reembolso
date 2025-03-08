@@ -73,6 +73,9 @@ function expenseAdd(newExpense) {
     expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon);
     expenseList.append(expenseItem);
 
+    // limpando form
+    formClear()
+
     updateTotals();
   } catch (error) {
     alert("Não foi possível atualizar.");
@@ -117,13 +120,15 @@ function updateTotals() {
     // adiciono o simbolo e o valor total formatado
     expensesTotal.append(symbolBRL, total)
 
+    //limpar form
+    formClear()
+
   } catch (error) {
     console.log(error);
   }
 }
 
 // EVENTO QUE CAPTURA CLICK NOS ITENS DA LISTA
-
 expenseList.addEventListener("click", (e) => {
   e.preventDefault()
 
@@ -140,3 +145,9 @@ expenseList.addEventListener("click", (e) => {
   updateTotals()
 
 })
+
+function formClear(){
+  expense.value = ""
+  category.value = ""
+  amount.value = ""
+}
