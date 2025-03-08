@@ -53,6 +53,7 @@ form.onsubmit = (e) => {
 
 function expenseAdd(newExpense){
   try {
+
     // criar o elemento para adicionar na lista.
     const expenseItem = document.createElement("li")
     expenseItem.classList.add("expense")
@@ -78,11 +79,19 @@ function expenseAdd(newExpense){
     // adicionar name e category na div
     exprenseInfo.append(expenseName, expenseCategory)
 
+    // criar valor da dispesa
+    const expenseAmount = document.createElement("span")
+    expenseAmount.classList.add("expense-amount")
+    expenseAmount.innerHTML = `<small>R$</small>${newExpense.amount.toUpperCase().replace("R$", "")}`
+
     // adicionar informarções no item
-    expenseItem.append(expenseIcon, exprenseInfo)
+    expenseItem.append(expenseIcon, exprenseInfo, expenseAmount)
     
     // adiciona item na lista
     expenseList.append(expenseItem)
+
+    // 
+
 
   } catch (error) {
     alert("não foi possível atualizar.")
