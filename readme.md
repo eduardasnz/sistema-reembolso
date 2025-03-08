@@ -15,3 +15,9 @@
 
 [X] - criar objeto com os detalhes do formulario
   <!-- e.preventDefault = desativa o recarregamento da pagina -->
+
+[X] - criar uma função para adicionar uma nova despesa na lista.
+
+[X] - função de criar um li
+
+[X] - adicionar um ícone de categoria dinamicamente em um item de despesa.
