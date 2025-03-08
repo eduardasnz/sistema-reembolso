@@ -88,9 +88,13 @@ function updateTotals() {
     expensesQuantity.textContent = `${itens.length} ${itens.length > 1 ? "despesas" : "despesa"}`;
 
     let total = 0;
+    
+    // percorrer cada item da lista
     for (let item of itens) {
       const itemAmount = item.querySelector(".expense-amount");
-      let value = itemAmount.textContent.replace(/\D/g, "").replace(",", ".");
+      
+      let value = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",", ".");
+      
       value = parseFloat(value);
 
       if (isNaN(value)) {
@@ -100,12 +104,19 @@ function updateTotals() {
       total += value;
     }
 
+    // criar a span para adicionar o R$ formatado 
     expensesTotal.innerHTML = "";
     const symbolBRL = document.createElement("small");
     symbolBRL.textContent = "R$";
 
-    total = formatCurrencyBRL(total).replace("R$", "").trim();
-    expensesTotal.append(symbolBRL, total);
+    // formata o valor e remove o R$ do small
+    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "")
+    
+    expensesTotal.innerHTML = ""
+
+    // adiciono o simbolo e o valor total formatado
+    expensesTotal.append(symbolBRL, total)
+
   } catch (error) {
     console.log(error);
   }
