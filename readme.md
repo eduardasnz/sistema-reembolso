@@ -10,3 +10,8 @@
 
 [X] - formatar o valor para real 
   <!-- Returna o valor convertido p string usando >> the current locale <<  -->
+
+- Obs: e.preventDefault() é usado para quando fazer um submit a pagina NAO recarregar.
+
+[X] - criar objeto com os detalhes do formulario
+  <!-- e.preventDefault = desativa o recarregamento da pagina -->
