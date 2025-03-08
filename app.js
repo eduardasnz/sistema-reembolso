@@ -6,40 +6,28 @@ const category = document.getElementById("category")
 
 // selecionar elementos da lista
 const expenseList = document.querySelector("ul")
-const expensesQuantity = document.querySelector("aside header p span")
 const expensesTotal = document.querySelector("aside header h2") 
+const expensesQuantity = document.querySelector("aside header p span")
 
 // CAPTURA EVENTO DO INPUT PARA FORMATAR O VALOR
 amount.oninput = () => {
-  // só pega numeros
-  let value = amount.value.replace(/\D/g, "");
-
-  // transformar o valor em CENTAVOS.
-  value = Number(value) / 100
-
-  // atualiza o valor do input
-  amount.value = formatCurrencyBRL(value)
+  let value = amount.value.replace(/\D/g, ""); 
+  value = Number(value) / 100;
+  amount.value = formatCurrencyBRL(value);
 }
 
 //FORMATANDO PARA O PADRÃO REAL BRASILEIRO
 function formatCurrencyBRL(value) {
- 
-  // returna o valor convertido p string usando -> the current locale <- .
-  value = value.toLocaleString("pt-BR", {
+  return value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL"
-  })
-
-  return value
+  });
 }
-
 
 // CAPTURA EVENTO DE SUBMIT DO FORMULÁRIO
 form.onsubmit = (e) => {
-  //NÃO recarregar página.
-  e.preventDefault()
+  e.preventDefault();
 
-  // nova dispesa
   const newExpense = {
     id: new Date().getTime(),
     expense: expense.value,
@@ -47,102 +35,78 @@ form.onsubmit = (e) => {
     category_name: category.options[category.selectedIndex].text,
     amount: amount.value,
     created_at: new Date(),
-  }
+  };
 
-  // chama a função de adicionar o item na lista.
-  expenseAdd(newExpense)
+  expenseAdd(newExpense);
 }
 
 // ADICIONA UM NOVO ITEM NA LISTA
-function expenseAdd(newExpense){
+function expenseAdd(newExpense) {
   try {
+    const expenseItem = document.createElement("li");
+    expenseItem.classList.add("expense");
 
-    // criar o elemento para adicionar na lista.
-    const expenseItem = document.createElement("li")
-    expenseItem.classList.add("expense")
+    const expenseIcon = document.createElement("img");
+    expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`);
+    expenseIcon.setAttribute("alt", newExpense.category_name);
 
-    // criar o icone da categoria
-    const expenseIcon = document.createElement("img")
-    expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`)
-    expenseIcon.setAttribute("alt", newExpense.category_name)
+    const expenseInfo = document.createElement("div");
+    expenseInfo.classList.add("expense-info");
 
-    // criar info da dispesa
-    const exprenseInfo = document.createElement("div")
-    exprenseInfo.classList.add("expense-info")
+    const expenseName = document.createElement("strong");
+    expenseName.textContent = newExpense.expense;
 
+    const expenseCategory = document.createElement("span");
+    expenseCategory.textContent = newExpense.category_name;
 
-    // criar nome da dispesa
-    const expenseName = document.createElement("strong")
-    expenseName.textContent = newExpense.expense
+    expenseInfo.append(expenseName, expenseCategory);
 
-    // criar a categoria da dispesa
-    const expenseCategory = document.createElement("span")
-    expenseCategory.textContent = newExpense.category_name
+    const expenseAmount = document.createElement("span");
+    expenseAmount.classList.add("expense-amount");
+    expenseAmount.innerHTML = `<small>R$</small>${newExpense.amount.replace("R$", "").trim()}`;
 
-    // adicionar name e category na div
-    exprenseInfo.append(expenseName, expenseCategory)
+    const removeIcon = document.createElement("img");
+    removeIcon.classList.add("remove-icon");
+    removeIcon.setAttribute("src", "img/remove.svg");
+    removeIcon.setAttribute("alt", "remover");
 
-    // criar valor da dispesa
-    const expenseAmount = document.createElement("span")
-    expenseAmount.classList.add("expense-amount")
-    expenseAmount.innerHTML = `<small>R$</small>${newExpense.amount.toUpperCase().replace("R$", "")}`
+    expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon);
+    expenseList.append(expenseItem);
 
-    // criar icone de remover
-    const removeIcon = document.createElement("img")
-    removeIcon.classList.add("remove-icon")
-    removeIcon.setAttribute("src", "img/remove.svg")
-    removeIcon.setAttribute("alt", "remover")
-
-    // adicionar informarções no item
-    expenseItem.append(expenseIcon, exprenseInfo, expenseAmount, removeIcon)
-    
-    // adiciona item na lista
-    expenseList.append(expenseItem)
-
-    // 
-
-    updateTotals()
+    updateTotals();
   } catch (error) {
-    alert("não foi possível atualizar.")
-    console.log(error)
+    alert("Não foi possível atualizar.");
+    console.log(error);
   }
 }
 
 // ATUALIZAR OS TOTAIS
-function updateTotals(){
+function updateTotals() {
   try {
-    // recuperar todos itens (li) da lista (ul)
-    const itens = expenseList.children
-    
-    // atualizar quantidade de itens na lista (com uma verificação > ? : )
-    expensesQuantity.textContent = `${itens.length} 
-    ${itens.length > 1 ? "despesas" : "despesa"}`
+    const itens = expenseList.children;
 
-    // variavel para incrementar o total
-    let total = 0
+    expensesQuantity.textContent = `${itens.length} ${itens.length > 1 ? "despesas" : "despesa"}`;
 
-    for(let item = 0; item < itens.length; item++){
-      const itemAmount = itens[item].querySelector(".expense-amount")
+    let total = 0;
+    for (let item of itens) {
+      const itemAmount = item.querySelector(".expense-amount");
+      let value = itemAmount.textContent.replace(/\D/g, "").replace(",", ".");
+      value = parseFloat(value);
 
-      // formatação 
-      let value = itemAmount.textContent.replace(/\[^]\D/g, "").replace(",", ".")
-    
-      //converter o valor para float
-      value = parseFloat(value)
-
-      //verificando se o numero é valido
-      if(isNaN(value)){
-        return alert("Não foi possível calcular o total.")
+      if (isNaN(value)) {
+        return alert("Não foi possível calcular o total.");
       }
 
-      // incrementando valor total
-      total += Number(value)
+      total += value;
     }
 
-    // exibir o total
-    expensesTotal.textContent = total
+    expensesTotal.innerHTML = "";
+    const symbolBRL = document.createElement("small");
+    symbolBRL.textContent = "R$";
 
+    total = formatCurrencyBRL(total).replace("R$", "").trim();
+    expensesTotal.append(symbolBRL, total);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
