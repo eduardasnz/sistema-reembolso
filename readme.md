@@ -1,45 +1,62 @@
-## Sistema de reembolso
+# 💰 Sistema de Reembolso
 
- # [X] - pegar os elementos do formulário.
-  <!-- Ex. const amount = documento.getElementById("amount") -->
+Este projeto é um sistema simples de **reembolso** desenvolvido com **HTML, CSS e JavaScript**, com foco principal na manipulação do **JavaScript** para capturar eventos, formatar valores e atualizar dinamicamente a interface do usuário.
 
- # [X] - capturar o evento do input (value) para formatar o valor.
-  <!-- 1) Fazer uma validação com regex para aceitar só NUMEROS no input -->
-  <!-- 2) Transformar o valor em CENTAVOS -->
-  <!-- 3) Atualizar o valor do input -->
+---
 
- # [X] - formatar o valor para real 
-  <!-- Returna o valor convertido p string usando >> the current locale <<  -->
+## ✨ Funcionalidades
 
-- Obs: e.preventDefault() é usado para quando fazer um submit a pagina NAO recarregar.
+### ✅ 1. Captura dos elementos do formulário
+📌 Os elementos do formulário são selecionados usando `document.getElementById()` para manipulação posterior.
 
- # [X] - criar objeto com os detalhes do formulario
-  <!-- e.preventDefault = desativa o recarregamento da pagina -->
+### ✅ 2. Tratamento do input de valores
+🔹 O valor inserido pelo usuário é capturado e formatado corretamente:
+  - ✨ Validação com **RegEx** para permitir apenas números.
+  - 💲 Conversão do valor para centavos.
+  - 🔄 Atualização do campo de input com o formato correto.
 
- # [X] - criar uma função para adicionar uma nova despesa na lista.
+### ✅ 3. Formatação para moeda brasileira (BRL)
+💵 O valor é formatado para **Real (R$)** utilizando `Intl.NumberFormat()` com a localidade adequada.
 
- # [X] - função de criar um li
-  <!-- para fazer isso eu utilizei o seguinte código:
+### ✅ 4. Prevenção do recarregamento da página
+⚠️ O método `e.preventDefault()` é utilizado no evento de submissão do formulário para evitar que a página recarregue ao adicionar uma nova despesa.
+
+### ✅ 5. Criação de um objeto com os dados da despesa
+📄 Ao submeter o formulário, um **objeto** contendo os detalhes da despesa é criado dinamicamente.
+
+### ✅ 6. Adição da despesa à lista
+📋 Uma nova despesa é adicionada à **lista de reembolsos** por meio de uma função específica.
+
+### ✅ 7. Criação dos elementos HTML dinamicamente
+🛠️ Para exibir as despesas na interface, os seguintes elementos são criados dinamicamente:
+  - 🖼️ **Ícone da despesa** (`img`) baseado na categoria.
+  - 📌 **Informações da despesa** (`div` contendo o nome e a categoria).
+  - ✍️ **Nome da despesa** (`strong`).
+  - 🏷️ **Categoria da despesa** (`span`).
+  - 💲 **Valor da despesa** (`span` com `innerHTML`).
   
-  1) criei o ícone: 
-    const expenseIcon = document.createElement("img")
-    expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`)
-    expenseIcon.setAttribute("alt", newExpense.category_name)
-  
-  2) criei a informação (div):
-    const exprenseInfo = document.createElement("div")
-    exprenseInfo.classList.add("expense-info")
-   
-  3) criei nome da dispesa:
-    const expenseName = document.createElement("strong")
-    expenseName.textContent = newExpense.expense
+Os elementos são organizados e inseridos no DOM para exibição dinâmica.
 
-  4) criei o span(categoria):
-    const expenseCategory = document.createElement("span")
-    expenseCategory.textContent = newExpense.category_name
+---
 
-  por fim isso: exprenseInfo.append(expenseName, expenseCategory) || para adicionar tudo na div
-   -->
+## 🛠️ Tecnologias Utilizadas
+- 🌐 **HTML** para estruturação da página.
+- 🎨 **CSS** para estilização (opcional, foco no JavaScript).
+- ⚡ **JavaScript** para manipulação dos elementos e eventos.
 
- # [X] - adicionar o valor da dispesa.
-  <!-- Fizemos isso criando o elemento span e um smal com innerHTML -->
+---
+
+## 🚀 Como Usar
+1️⃣ Insira o valor da despesa no campo correspondente.
+2️⃣ Escolha a categoria da despesa.
+3️⃣ Clique no botão de adicionar para incluir a despesa na lista.
+4️⃣ O valor será formatado corretamente e exibido junto à lista de reembolsos.
+
+---
+
+## 📌 Observação
+✅ O código foi estruturado para ser **dinâmico e modular**, facilitando futuras melhorias ou integrações.
+
+✨ *Este projeto é ideal para quem deseja praticar manipulação do DOM e eventos no JavaScript!* 🚀
+
+💜 *Projeto do módulo JavaScript Intermediário da Rocketseat* 
